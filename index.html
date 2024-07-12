@@ -4,7 +4,37 @@
 
 <style>
 
+body {
+	background-color: black;
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: 100;
+	color: aliceblue;
+}
 
+.menu button {
+	z-index: 10;
+}
+
+.menuBB1 {
+	background-color: black;
+	position: sticky;
+	z-index: 2;
+	height: auto;
+	width: auto;
+	overflow-x: visible;
+}
+
+.menu {
+	height: 100%;
+	width: 95px;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: black;
+	overflow-x: inherit;
+	padding-left: 10px;
+}
 
 </style>
 
@@ -12,31 +42,40 @@
 
 <body>
 
+<!-- Menu Style Stuff-->
+
+<!-- Menu stuff-->
+
 <script type="module">
   import anime from 'js/animejs/lib/anime.es.js';
 </script>
 
 <script src="js/animejs/lib/anime.min"></script>
-<div id="menu button">
-	<h1>Menu</h1>
-</div>
 
-<div id="menu">
 
-	<div id="buttonBox1" style="line-height: 5px;">
-		<div id="b1">
-			<h2>Button1</h2>
-		</div>
+<div class="menu">
 
-		<div id="b2">
-			<h2>Button2</h2>
-		</div>
+	<div id="menu button">
+		<h1>Menu</h1>
+	</div>
+	<div class="menuBB1">
+		<div id="buttonBox1" style="line-height: 5px;">
+			<div id="b1">
+				<h2>Frigates</h2>
 
-		<div id="b3">
-			<h2>Button3</h2>
+	
+
+			</div>
+
+			<div id="b2">
+				<h2>Destroyers</h2>
+			</div>
+
+			<div id="b3">
+				<h2>Cruisers</h2>
+			</div>
 		</div>
 	</div>
-
 </div>
 
 <script>
@@ -47,11 +86,38 @@ var b1Toggle = false
 var b2Toggle = false
 var b3Toggle = false
 
+var menuHoverToggle = false
+
+var buttonJumpDist = 100
+
+document.getElementById('menu button').addEventListener('mouseover', function() {
+	anime({
+		targets: '#buttonbox1',
+		translateX: 10,
+		direction: 'alternate',
+		duration: 100,
+	})
+
+	if (menuHoverToggle==true) {
+		anime({
+		targets: '#buttonbox1',
+		translateX: 0,
+		})
+
+		menuHoverToggle = false
+	} else {
+		menuHoverToggle = true
+	}
+
+})
+
+
+
 document.getElementById('menu button').addEventListener('click', function() {
 
 	anime({
 		targets: '#buttonbox1',
-		translateX: 50,
+		translateX: buttonJumpDist,
 	})
 
 	if (menuToggle==true) {
@@ -71,7 +137,7 @@ document.getElementById('b1').addEventListener('click', function() {
 
 anime({
 	targets: '#b1',
-	translateX: 50,
+	translateX: buttonJumpDist,
 })
 
 if (b1Toggle==true) {
@@ -91,7 +157,7 @@ document.getElementById('b2').addEventListener('click', function() {
 
 anime({
 	targets: '#b2',
-	translateX: 50,
+	translateX: buttonJumpDist,
 })
 
 if (b2Toggle==true) {
@@ -111,7 +177,7 @@ document.getElementById('b3').addEventListener('click', function() {
 
 anime({
 	targets: '#b3',
-	translateX: 50,
+	translateX: buttonJumpDist,
 })
 
 if (b3Toggle==true) {
