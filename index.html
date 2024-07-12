@@ -62,21 +62,62 @@ body {
 		<div id="buttonBox1" style="line-height: 5px;">
 			<div id="b1">
 				<h2>Frigates</h2>
-
-	
-
+				<div id="b1Sublist">
+					<h3>Heron</h3>
+					<h3>Merlin</h3>
+					<h3>Slicer</h3>
+				</div>
 			</div>
 
 			<div id="b2">
 				<h2>Destroyers</h2>
+				<div id="b2Sublist">
+					<h3>Thrasher</h3>
+					<h3>Heretic</h3>
+					<h3>Draugur</h3>
+				</div>
 			</div>
 
 			<div id="b3">
 				<h2>Cruisers</h2>
+				<div id="b3Sublist">
+					<h3>Moa</h3>
+					<h3>Thorax</h3>
+					<h3>Proteus</h3>
+				</div>
 			</div>
+
 		</div>
 	</div>
 </div>
+
+<!-- Weird scrambly word thing -->
+
+<script>
+
+function scramble(inString) {
+	const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop124567890'
+	var scrambleText
+	const inStringLen = inString.length
+
+	function randomNumber(min, max) {
+		return Math.floor(Math.random()*(max-min)+min);
+	}
+
+	const randomIndex = randomNumber(1,69)
+
+	for (let i=0; i<inString.length; i++) {
+		var m = console.log(randomNumber(1,69))
+		var randChar = charSet.at(m);
+		console.log(randChar)
+	}
+	
+
+}
+
+scramble('bruh')
+
+</script>
 
 <script>
 
@@ -90,25 +131,15 @@ var menuHoverToggle = false
 
 var buttonJumpDist = 100
 
+const menuB = document.getElementById('menu button')
+
 document.getElementById('menu button').addEventListener('mouseover', function() {
 	anime({
-		targets: '#buttonbox1',
-		translateX: 10,
+		targets: menuB,
+		color: '#FF0000',
 		direction: 'alternate',
 		duration: 100,
 	})
-
-	if (menuHoverToggle==true) {
-		anime({
-		targets: '#buttonbox1',
-		translateX: 0,
-		})
-
-		menuHoverToggle = false
-	} else {
-		menuHoverToggle = true
-	}
-
 })
 
 
@@ -136,13 +167,13 @@ document.getElementById('menu button').addEventListener('click', function() {
 document.getElementById('b1').addEventListener('click', function() {
 
 anime({
-	targets: '#b1',
+	targets: '#b1Sublist',
 	translateX: buttonJumpDist,
 })
 
 if (b1Toggle==true) {
 	anime({
-	targets: '#b1',
+	targets: '#b1Sublist',
 	translateX: 0,
 	})
 
@@ -156,13 +187,13 @@ if (b1Toggle==true) {
 document.getElementById('b2').addEventListener('click', function() {
 
 anime({
-	targets: '#b2',
+	targets: '#b2Sublist',
 	translateX: buttonJumpDist,
 })
 
 if (b2Toggle==true) {
 	anime({
-	targets: '#b2',
+	targets: '#b2Sublist',
 	translateX: 0,
 	})
 
@@ -176,13 +207,13 @@ if (b2Toggle==true) {
 document.getElementById('b3').addEventListener('click', function() {
 
 anime({
-	targets: '#b3',
+	targets: '#b3Sublist',
 	translateX: buttonJumpDist,
 })
 
 if (b3Toggle==true) {
 	anime({
-	targets: '#b3',
+	targets: '#b3Sublist',
 	translateX: 0,
 	})
 
