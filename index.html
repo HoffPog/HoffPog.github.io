@@ -1,25 +1,133 @@
 <html>
-
 <head>
-<title>bruh</title>
+<title>Testing n stuff</title>
+
+<style>
+
+
+
+</style>
+
 </head>
 
 <body>
 
-<script src="/anime/lib/anime.min.js"></script>
+<script type="module">
+  import anime from 'js/animejs/lib/anime.es.js';
+</script>
 
-<div id="e">
-    <h1>reee
-    </h1>
+<script src="js/animejs/lib/anime.min"></script>
+<div id="menu button">
+	<h1>Menu</h1>
+</div>
+
+<div id="menu">
+
+	<div id="buttonBox1" style="line-height: 5px;">
+		<div id="b1">
+			<h2>Button1</h2>
+		</div>
+
+		<div id="b2">
+			<h2>Button2</h2>
+		</div>
+
+		<div id="b3">
+			<h2>Button3</h2>
+		</div>
+	</div>
+
 </div>
 
 <script>
-    anime({
-        targets: 'e',
-        translateX: 150,
-    })
+
+var buttonList1 = ['#b1', '#b2', '#b3']
+var menuToggle = false
+var b1Toggle = false
+var b2Toggle = false
+var b3Toggle = false
+
+document.getElementById('menu button').addEventListener('click', function() {
+
+	anime({
+		targets: '#buttonbox1',
+		translateX: 50,
+	})
+
+	if (menuToggle==true) {
+		anime({
+		targets: '#buttonbox1',
+		translateX: 0,
+		})
+
+		menuToggle = false
+	} else {
+		menuToggle = true
+	}
+
+})
+
+document.getElementById('b1').addEventListener('click', function() {
+
+anime({
+	targets: '#b1',
+	translateX: 50,
+})
+
+if (b1Toggle==true) {
+	anime({
+	targets: '#b1',
+	translateX: 0,
+	})
+
+	b1Toggle = false
+} else {
+	b1Toggle = true
+}
+
+})
+
+document.getElementById('b2').addEventListener('click', function() {
+
+anime({
+	targets: '#b2',
+	translateX: 50,
+})
+
+if (b2Toggle==true) {
+	anime({
+	targets: '#b2',
+	translateX: 0,
+	})
+
+	b2Toggle = false
+} else {
+	b2Toggle = true
+}
+
+})
+
+document.getElementById('b3').addEventListener('click', function() {
+
+anime({
+	targets: '#b3',
+	translateX: 50,
+})
+
+if (b3Toggle==true) {
+	anime({
+	targets: '#b3',
+	translateX: 0,
+	})
+
+	b3Toggle = false
+} else {
+	b3Toggle = true
+}
+
+})
+
 </script>
 
 </body>
-
 </html>
