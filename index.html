@@ -7,34 +7,55 @@
 body {
 	background-color: black;
 	font-family: 'Courier New', Courier, monospace;
-	font-weight: 100;
-	color: aliceblue;
+	font-weight: lighter;
+	color: '#00FF00';
 }
 
-.menu button {
-	z-index: 10;
+.menu_container {
+	color: #00FF00;
+	line-height: 20px;
 }
 
-.menuBB1 {
-	background-color: black;
-	position: sticky;
-	z-index: 2;
-	height: auto;
-	width: auto;
-	overflow-x: visible;
+.menu_header {
+	color: #00FF00;
 }
 
-.menu {
-	height: 100%;
-	width: 95px;
-	position: fixed;
-	z-index: 1;
+.h2_button {
+  display: block;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.5em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  font-weight: lighter;
+  background: none;
+  order: none;
+  cursor: pointer;
+  border: none;
+
+}
+
+.h3_button {
+	font-size: 1.17em;
+	font-weight: lighter;
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: #00FF00;
+	font-family: 'Courier New', Courier, monospace;
+}
+
+#bg_canvas {
+	position: absolute;
 	top: 0;
 	left: 0;
-	background-color: black;
-	overflow-x: inherit;
-	padding-left: 10px;
+	border: 1px;
+	z-index: -100;
+
 }
+
 
 </style>
 
@@ -45,182 +66,202 @@ body {
 <!-- Menu Style Stuff-->
 
 <!-- Menu stuff-->
-
-<script type="module">
-  import anime from 'js/animejs/lib/anime.es.js';
-</script>
-
 <script src="js/animejs/lib/anime.min"></script>
 
+<div class="menu_container">
+	<button class="h2_button menu_header menu_button" onmouseover="style='color:#C0FF00'" onmouseout="style='color:white'">Menu</button>
 
-<div class="menu">
-
-	<div id="menu button">
-		<h1>Menu</h1>
+	<div class="frigate_container">
+		<button class="h3_button frigate_button" onmouseover="style='color:#C0FF00'" onmouseout="style='color:white'">Frigates</button>
+		<div id="frigate_target"></div>
 	</div>
-	<div class="menuBB1">
-		<div id="buttonBox1" style="line-height: 5px;">
-			<div id="b1">
-				<h2>Frigates</h2>
-				<div id="b1Sublist">
-					<h3>Heron</h3>
-					<h3>Merlin</h3>
-					<h3>Slicer</h3>
-				</div>
-			</div>
 
-			<div id="b2">
-				<h2>Destroyers</h2>
-				<div id="b2Sublist">
-					<h3>Thrasher</h3>
-					<h3>Heretic</h3>
-					<h3>Draugur</h3>
-				</div>
-			</div>
-
-			<div id="b3">
-				<h2>Cruisers</h2>
-				<div id="b3Sublist">
-					<h3>Moa</h3>
-					<h3>Thorax</h3>
-					<h3>Proteus</h3>
-				</div>
-			</div>
-
-		</div>
+	<div class="destroyer_container">
+		<button class="h3_button destroyer_button" onmouseover="style='color:#C0FF00'" onmouseout="style='color:white'">Destroyers</button>
 	</div>
+
+	<div class="cruiser_container">
+		<button class="h3_button cruiser_button" onmouseover="style='color:#C0FF00'" onmouseout="style='color:white'">Cruisers</button>
+	</div>
+
 </div>
 
-<!-- Weird scrambly word thing -->
+<canvas id="bg_canvas"></canvas>
+
+
+<!--Auto-generate the ship tree-->
 
 <script>
 
-function scramble(inString) {
-	const charSet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop124567890'
-	var scrambleText
-	const inStringLen = inString.length
+const frig_parent = document.querySelector("#frigate_target")
 
-	function randomNumber(min, max) {
-		return Math.floor(Math.random()*(max-min)+min);
-	}
+frigate_list = ['Atron', 'Imicus', 'Maulus', 'Thalia', 'Harpy', 'Hawk', 'Enyo']
+frigate_id_list = []
 
-	const randomIndex = randomNumber(1,69)
+frigate_list.forEach(element => {
+	console.log(element)
+	const ship = document.createElement("div");
+	const self_name = element.toString()
+	ship.textContent = element.toString();
+	ship.style.color = "white";
+	ship.style.fontSize = 20;
+	ship.style.fontWeight = 'lighter'
+	ship.style.paddingLeft = 25
+	ship.style.lineHeight = 1
+	ship.id = element.toString()
+	frigate_id_list.push('#'+self_name)
+	ship.style.lineHeight = 0
+	ship.style.opacity = 0
 
-	for (let i=0; i<inString.length; i++) {
-		var m = console.log(randomNumber(1,69))
-		var randChar = charSet.at(m);
-		console.log(randChar)
-	}
+	frig_parent.appendChild(ship);
+});
+
+console.log(frigate_id_list)
+
+</script>
+
+<script>
+
+	const canvas = document.getElementById('bg_canvas');
+	const ctx = canvas.getContext('2d')
+
+	function resizeCanvas() {
 	
+	var cWidth = window.innerWidth
+	var cHeight = window.innerHeight
+
+	canvas.height = cHeight
+	canvas.width = cWidth
+
+
+	}
+
+	window.addEventListener('resize', resizeCanvas)
+
+	resizeCanvas()
+
+</script>
+
+<script>
+	function sleep(ms) {
+  	return new Promise(resolve => setTimeout(resolve, ms));
+	}
+</script>
+
+<!--Cool background thing-->
+
+<script>
+
+var wWidth
+var hHeight
+
+wordList = [
+	"cheese burger",
+	"チーズバーガー",
+	"起司漢堡",
+	"Käseburger",
+	"μπιφτέκι τυριού",
+	"पनीर बर्गर",
+
+
+]
+
+function createSequence() {
+	const word2Scramble = wordList.at(Math.floor((Math.random()*(wordList.length-1))))
+	seq = []
+	for (let i = 0; i < word2Scramble.length; i++) {
+		seq.push(word2Scramble[i])
+	}
+
+	return seq
 
 }
 
-scramble('bruh')
+function draw() {
 
+	var x = Math.floor(Math.random()*canvas.width)
+	var y = Math.floor(Math.random()*canvas.height)
+	var charSet = createSequence()
+	var charOffset = 30
+	var charOffsetIterator = 15
+
+	charSet.reverse()
+
+	charSet.forEach(element => {
+		ctx.strokeStyle = '#00FF00'
+		ctx.font = "20px Courier New"
+		ctx.strokeText(element, x, y-charOffset)
+		charOffset = charOffset + charOffsetIterator
+	})
+
+	charOffset = 10
+
+}
+
+setInterval(()=> {
+	draw()
+}, 400)
 </script>
 
+<!--Menu "Jump" animation logic-->
+
 <script>
-
-var buttonList1 = ['#b1', '#b2', '#b3']
-var menuToggle = false
-var b1Toggle = false
-var b2Toggle = false
-var b3Toggle = false
-
 var menuHoverToggle = false
+var menuToggle = false
 
-var buttonJumpDist = 100
+const buttonJumpDist = 50
 
-const menuB = document.getElementById('menu button')
+const menu_button = document.querySelector('.menu_button')
+const frigate_button = document.querySelector('.frigate_button')
 
-document.getElementById('menu button').addEventListener('mouseover', function() {
+const shipType_containerList = ['.frigate_container', '.destroyer_container', '.cruiser_container']
+
+
+menu_button.addEventListener('click', function() {
+	console.log('fired')
 	anime({
-		targets: menuB,
-		color: '#FF0000',
-		direction: 'alternate',
-		duration: 100,
-	})
-})
-
-
-
-document.getElementById('menu button').addEventListener('click', function() {
-
-	anime({
-		targets: '#buttonbox1',
-		translateX: buttonJumpDist,
+		targets: shipType_containerList,
+		translateX: 50,
+		delay: anime.stagger(50)
 	})
 
 	if (menuToggle==true) {
-		anime({
-		targets: '#buttonbox1',
-		translateX: 0,
-		})
+        anime({
+            targets: shipType_containerList,
+			translateX: 0,
+            delay: anime.stagger(50)
+        })
+            menuToggle = false
+        } else {
+            menuToggle = true
+        }
 
-		menuToggle = false
-	} else {
-		menuToggle = true
-	}
 
 })
 
-document.getElementById('b1').addEventListener('click', function() {
-
-anime({
-	targets: '#b1Sublist',
-	translateX: buttonJumpDist,
-})
-
-if (b1Toggle==true) {
+frigate_button.addEventListener('click', function() {
+	console.log('fired')
 	anime({
-	targets: '#b1Sublist',
-	translateX: 0,
+		targets: frigate_id_list,
+		translateX: 50,
+		lineHeight: 1,
+		opacity: 1,
+		delay: anime.stagger(50)
 	})
 
-	b1Toggle = false
-} else {
-	b1Toggle = true
-}
+	if (menuToggle==true) {
+        anime({
+            targets: frigate_id_list,
+			translateX: 0,
+			lineHeight: 0,
+			opacity: 0,
+			delay: anime.stagger(50),
+        })
+            menuToggle = false
+        } else {
+            menuToggle = true
+        }
 
-})
-
-document.getElementById('b2').addEventListener('click', function() {
-
-anime({
-	targets: '#b2Sublist',
-	translateX: buttonJumpDist,
-})
-
-if (b2Toggle==true) {
-	anime({
-	targets: '#b2Sublist',
-	translateX: 0,
-	})
-
-	b2Toggle = false
-} else {
-	b2Toggle = true
-}
-
-})
-
-document.getElementById('b3').addEventListener('click', function() {
-
-anime({
-	targets: '#b3Sublist',
-	translateX: buttonJumpDist,
-})
-
-if (b3Toggle==true) {
-	anime({
-	targets: '#b3Sublist',
-	translateX: 0,
-	})
-
-	b3Toggle = false
-} else {
-	b3Toggle = true
-}
 
 })
 
