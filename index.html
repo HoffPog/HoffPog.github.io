@@ -12,12 +12,12 @@ body {
 }
 
 .menu_container {
-	color: #00FF00;
+	color: white;
 	line-height: 20px;
 }
 
 .menu_header {
-	color: #00FF00;
+	color: white;
 }
 
 .h2_button {
@@ -43,7 +43,7 @@ body {
 	background: none;
 	border: none;
 	cursor: pointer;
-	color: #00FF00;
+	color: white;
 	font-family: 'Courier New', Courier, monospace;
 }
 
@@ -54,6 +54,11 @@ body {
 	border: 1px;
 	z-index: -100;
 
+}
+
+.bg_container {
+	position: absolute;
+	color: red;
 }
 
 
@@ -67,6 +72,12 @@ body {
 
 <!-- Menu stuff-->
 <script src="js/animejs/lib/anime.min"></script>
+
+<div class="bg_container"></div>
+
+	<div id="bg_box"></div>
+
+<canvas id="bg_canvas"></canvas>
 
 <div class="menu_container">
 	<button class="h2_button menu_header menu_button" onmouseover="style='color:#C0FF00'" onmouseout="style='color:white'">Menu</button>
@@ -85,8 +96,6 @@ body {
 	</div>
 
 </div>
-
-<canvas id="bg_canvas"></canvas>
 
 
 <!--Auto-generate the ship tree-->
@@ -166,6 +175,13 @@ wordList = [
 
 ]
 
+colorList = [
+	'#FEF9E7',
+	'#F7DC6G',
+	'#D4AC0D',
+	'#9A7D0A'
+]
+
 function createSequence() {
 	const word2Scramble = wordList.at(Math.floor((Math.random()*(wordList.length-1))))
 	seq = []
@@ -173,34 +189,50 @@ function createSequence() {
 		seq.push(word2Scramble[i])
 	}
 
-	return seq
+	tempList = []
+	seq.forEach(element => {
+		tempList.push(element+'\n')
+	})
+
+	tempList.repl
 
 }
 
+const bg = document.querySelector('#bg_box')
+
+charBox = []
+var xmove = Math.floor(Math.random()*100)
+var ymove = 10
+
 function draw() {
+	var scram = createSequence()
+	var trail = document.createElement("div")
+	trail.textContent = scram
+	trail.style.color = '#FF0000'
 
-	var x = Math.floor(Math.random()*canvas.width)
-	var y = Math.floor(Math.random()*canvas.height)
-	var charSet = createSequence()
-	var charOffset = 30
-	var charOffsetIterator = 15
-
-	charSet.reverse()
-
-	charSet.forEach(element => {
-		ctx.strokeStyle = '#00FF00'
-		ctx.font = "20px Courier New"
-		ctx.strokeText(element, x, y-charOffset)
-		charOffset = charOffset + charOffsetIterator
-	})
-
-	charOffset = 10
+	bg.appendChild(trail)
 
 }
 
 setInterval(()=> {
-	draw()
+draw()
 }, 400)
+
+
+const maxChars = 100
+
+
+let intId =	setInterval(()=> {
+		draw()
+
+		if (charBox.length>maxChars) {
+			clearInterval(intId)
+		}
+
+	}, 10)
+
+
+
 </script>
 
 <!--Menu "Jump" animation logic-->
